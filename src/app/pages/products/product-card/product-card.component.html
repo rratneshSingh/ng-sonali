@@ -1,0 +1,8 @@
+<div class="card" style="height: 100%;">
+    <div class="card-body">
+      <h5 class="card-title">{{product?.title}}</h5>
+      <p class="card-text">{{product?.description}}</p>
+      <p>Price: {{product?.price}}</p>
+      <app-add-remove-product [count]="cartCount" (onAdd)="onCartAdd.emit(product?.id || '')" (onSubstract)="onCartRemove.emit(product?.id || '')"></app-add-remove-product>
+    </div>
+</div>
