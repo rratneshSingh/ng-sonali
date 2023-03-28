@@ -3,7 +3,7 @@
     <h1>Products ( {{ cartCount }} )</h1>
 
     <div class="row">
-        <div class="col-4" *ngFor="let product of products">
+        <div class="col-4" *ngFor="let product of ps.products">
             <app-product-card [cartCount]="cart[product?.id || ''] || 0" [product]="product" (onCartAdd)="onAddToCart($event)" (onCartRemove)="onRemoveToCart($event)"></app-product-card>
         </div>
     </div>

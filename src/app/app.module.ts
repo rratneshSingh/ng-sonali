@@ -7,6 +7,8 @@ import { ProductsComponent } from './pages/products/products.component';
 import { ProductCardComponent } from './pages/products/product-card/product-card.component';
 import { CartComponent } from './pages/products/cart/cart.component';
 import { AddRemoveProductComponent } from './pages/products/add-remove-product/add-remove-product.component';
+import { CartDetailsComponent } from './pages/cart-details/cart-details.component';
+import { ProductService } from './services/product.service';
 
 @NgModule({
   declarations: [
@@ -14,13 +16,14 @@ import { AddRemoveProductComponent } from './pages/products/add-remove-product/a
     ProductsComponent,
     ProductCardComponent,
     CartComponent,
-    AddRemoveProductComponent
+    AddRemoveProductComponent,
+    CartDetailsComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
   ],
-  providers: [],
+  providers: [ProductService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
