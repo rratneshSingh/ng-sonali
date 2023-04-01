@@ -34,6 +34,7 @@ export class ProductService {
     onAddToCart(id: string) {
         this.cart = {...this.cart};
         this.cart[id] = (this.cart[id] || 0) + 1;
+        localStorage.setItem('cart', JSON.stringify(this.cart));
         this.cart$.next(this.cart);
     }
     
@@ -41,6 +42,12 @@ export class ProductService {
         this.cart = {...this.cart};
         if ( this.cart[id] === 0) return;
         this.cart[id] -= 1;
+        localStorage.setItem('cart', JSON.stringify(this.cart));
+        this.cart$.next(this.cart);
+    }
+
+    constructor() {
+        this.cart = JSON.parse(localStorage.getItem('cart') || '{}');
         this.cart$.next(this.cart);
     }
 }
