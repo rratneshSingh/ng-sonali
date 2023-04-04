@@ -1,4 +1,4 @@
-<div class="card" style="height: 100%;">
+<div class="card" style="height: 100%;" [routerLink]="['/products', product?.id]">
     <div class="card-body">
       <h5 class="card-title">{{product?.title}}</h5>
       <p class="card-text">{{product?.description}}</p>

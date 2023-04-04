@@ -2,9 +2,16 @@
 
     <h1>Products ( {{ cartCount }} )</h1>
 
+    <div class="input-group mb-3">
+        <input type="text" class="form-control" [(ngModel)]="searchText" placeholder="Type here..." aria-label="Type here..."
+            aria-describedby="button-addon2">
+        <button class="btn btn-outline-secondary" type="button" id="button-addon2" (click)="search()">Search</button>
+    </div>
+
     <div class="row">
-        <div class="col-4" *ngFor="let product of ps.products">
-            <app-product-card [cartCount]="cart[product?.id || ''] || 0" [product]="product" (onCartAdd)="onAddToCart($event)" (onCartRemove)="onRemoveToCart($event)"></app-product-card>
+        <div class="col-4" *ngFor="let product of filteredProducts" style="margin-bottom: 20px;">
+            <app-product-card [cartCount]="cart[product?.id || ''] || 0" [product]="product"
+                (onCartAdd)="onAddToCart($event)" (onCartRemove)="onRemoveToCart($event)"></app-product-card>
         </div>
     </div>
 </div>

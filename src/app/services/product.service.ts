@@ -23,6 +23,27 @@ export class ProductService {
             title: 'HP Laptop',
             price: 30000,
             description: '4GB Ram, 15 inch screen',
+            stockCount: 6
+        },
+        {
+            id: '4',
+            title: 'HP Mouse',
+            price: 300,
+            description: 'Wireless',
+            stockCount: 6
+        },
+        {
+            id: '5',
+            title: 'Lenevo Keyboard',
+            price: 2000,
+            description: 'Wireless',
+            stockCount: 6
+        },
+        {
+            id: '6',
+            title: 'BenQ Monitor',
+            price: 10000,
+            description: '15 inch screen',
             stockCount: 0
         }
     ];
@@ -44,6 +65,10 @@ export class ProductService {
         this.cart[id] -= 1;
         localStorage.setItem('cart', JSON.stringify(this.cart));
         this.cart$.next(this.cart);
+    }
+
+    getProductById( productId: string ) {
+        return this.products.find( p => p.id === productId );
     }
 
     constructor() {

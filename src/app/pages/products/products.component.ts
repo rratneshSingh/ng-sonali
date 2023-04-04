@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Product } from 'src/app/models/product.model';
 import { ProductService } from 'src/app/services/product.service';
 
 @Component({
@@ -8,7 +9,10 @@ import { ProductService } from 'src/app/services/product.service';
 })
 export class ProductsComponent implements OnInit {
 
+  products: Product[] = [];
+  filteredProducts: Product[] = [];
   cart: { [id: string]: number } = {};
+  searchText = '';
 
   get cartCount() {
     let count = 0;
@@ -29,10 +33,20 @@ export class ProductsComponent implements OnInit {
   constructor(public ps: ProductService) { }
 
   ngOnInit(): void {
+    this.products = [...this.ps.products];
+    this.filteredProducts = [...this.products];
     this.ps.cart$.subscribe((cart)=>{
-      debugger;
       this.cart = cart;
     });
   }
 
+  search() {
+    if ( this.searchText.trim() ) {
+      this.filteredProducts = this.products.filter( p => {
+        return p.title?.toLowerCase().includes(this.searchText.toLowerCase());
+      });
+    } else {
+      this.filteredProducts = [...this.products];
+    }
+  }
 }
