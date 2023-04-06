@@ -1,0 +1,37 @@
+<div class="container">
+    <div class="row">
+        <div class="col-6">
+            <form #f="ngForm">
+                <div class="mb-3">
+                    <label for="exampleInputTitle1" class="form-label">Title</label>
+                    <input type="text" #title="ngModel" ngModel name="title" class="form-control" id="exampleInputTitle1" required>
+                    <p *ngIf="title.invalid && title.dirty" style="color:red;">
+                        <span *ngIf="title.errors?.['required']">Title is required.</span>
+                    </p>
+                </div>
+                <div class="mb-3">
+                    <label for="exampleInputDescription1" class="form-label">Description</label>
+                    <input type="text" #desc="ngModel" ngModel name="description" class="form-control" id="exampleInputDescription1" required>
+                    <p *ngIf="desc.invalid && desc.dirty" style="color:red;">Description is required.</p>
+                </div>
+                <div class="mb-3">
+                    <label for="exampleInputPrice1" class="form-label">Price</label>
+                    <input type="number" #price="ngModel" ngModel  name="price" class="form-control" id="exampleInputPrice1" required>
+                    <p *ngIf="price.invalid && price.dirty" style="color:red;">Price is required.</p>
+                    <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> -->
+                </div>
+                <div class="mb-3">
+                    <label for="exampleInputStock1" class="form-label">Stock</label>
+                    <input type="number" #instock="ngModel" ngModel name="inStock" class="form-control" id="exampleInputStock1" required max="10">
+                    <p *ngIf="instock.invalid && instock.dirty" style="color:red;">
+                        <span *ngIf="instock.errors?.['required']">InStock is required.</span>
+                        <span *ngIf="instock.errors?.['max']">InStock must be less than 10</span>
+                    </p>
+                    <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> -->
+                </div>
+                <button type="submit" class="btn btn-primary" (click)="submit(f)" [disabled]="f.invalid">Submit</button>
+            </form>
+        </div>
+    </div>
+
+</div>
