@@ -3,22 +3,27 @@ import { CommonModule } from '@angular/common';
 import { AddProductsComponent } from './add-products/add-products.component';
 import { ProductsListComponent } from './products-list/products-list.component';
 import { RouterModule } from '@angular/router';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AddUserComponent } from './add-user/add-user.component';
 
 
 
 @NgModule({
   declarations: [
     AddProductsComponent,
-    ProductsListComponent
+    ProductsListComponent,
+    AddUserComponent
   ],
   imports: [
     CommonModule,
     FormsModule,
+    ReactiveFormsModule,
     RouterModule.forChild([
       { path: '', component: ProductsListComponent },
-      { path: 'create', component: AddProductsComponent },
-      { path: 'edit', component: AddProductsComponent }
+      { path: 'product/create', component: AddProductsComponent },
+      { path: 'product/edit', component: AddProductsComponent },
+      { path: 'user/create', component: AddUserComponent },
+      { path: 'user/edit', component: AddUserComponent }
     ])
   ]
 })

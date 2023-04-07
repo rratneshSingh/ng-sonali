@@ -11,6 +11,16 @@ export class AddRemoveProductComponent implements OnInit {
   @Output() onAdd = new EventEmitter();
   @Output() onSubstract = new EventEmitter();
 
+  onAddClick( e: Event ) {
+    e.stopPropagation();
+    this.onAdd.emit();
+  }
+
+  onSubstractClick( e: Event ) {
+    e.stopPropagation();
+    this.onSubstract.emit();
+  }
+
   constructor() { }
 
   ngOnInit(): void {

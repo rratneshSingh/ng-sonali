@@ -1,0 +1,40 @@
+<div class="container">
+    <div class="row">
+        <div class="col-6">
+            <form [formGroup]="form" (ngSubmit)="submit()">
+                <div class="mb-3">
+                    <label for="exampleInputFirstName1" class="form-label">FirstName</label>
+                    <input type="text" [formControl]="firstName" class="form-control" id="exampleInputFirstName1">
+                    <p style="color:red;" *ngIf="firstName?.invalid && firstName?.dirty">
+                        <span>FirstName is required.</span>
+                    </p>
+                </div>
+                <div class="mb-3">
+                    <label for="exampleInputLastName1" class="form-label">LastName</label>
+                    <input type="text" formControlName="lastName" class="form-control" id="exampleInputLastName1">
+                    <p style="color:red;" *ngIf="lastName?.invalid && lastName?.dirty">
+                        <span>LastName is required.</span>
+                    </p>
+                </div>
+                <div [formGroup]="address">
+                    Address::
+                    <div class="mb-3">
+                        <label for="exampleInputCity1" class="form-label">City</label>
+                        <input type="text" formControlName="city" class="form-control" id="exampleInputCity1">
+                        <p style="color:red;" *ngIf="city?.invalid && city?.dirty">
+                            <span>city is required.</span>
+                        </p>
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleInputState1" class="form-label">State</label>
+                        <input type="text" formControlName="state" class="form-control" id="exampleInputState1">
+                        <p style="color:red;" *ngIf="state?.invalid && state?.dirty">
+                            <span>state is required.</span>
+                        </p>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary" [disabled]="form.invalid">Submit</button>
+            </form>
+        </div>
+    </div>
+</div>
