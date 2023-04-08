@@ -24,8 +24,11 @@
                 <div class="mb-3">
                     <label for="exampleInputLastName1" class="form-label">LastName</label>
                     <input type="text" formControlName="lastName" class="form-control" id="exampleInputLastName1">
-                    <p style="color:red;" *ngIf="lastName?.invalid && lastName?.dirty">
+                    <p style="color:red;" *ngIf="lastName?.errors?.['required'] && lastName?.dirty">
                         <span>LastName is required.</span>
+                    </p>
+                    <p style="color:red;" *ngIf="lastName?.errors?.['mismatch'] && lastName?.dirty">
+                        <span>Password did not match.</span>
                     </p>
                 </div>
                 <ng-container [formGroup]="address">

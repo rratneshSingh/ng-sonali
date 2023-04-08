@@ -24,6 +24,31 @@ export class AddUserComponent implements OnInit {
   constructor(private fb: FormBuilder) {}
 
   ngOnInit(): void {
+   this.firstName?.valueChanges.subscribe((v)=>{
+      if ( v === this.lastName.value ) {
+        const r = this.lastName.getError('required');
+        this.lastName.setErrors({
+          required: r
+        })
+      } else {
+        this.lastName.setErrors({
+          mismatch: true
+        });
+      }
+    })
+
+    this.lastName?.valueChanges.subscribe((v)=>{
+      if ( v === this.firstName.value ) {
+        const r = this.lastName.getError('required');
+        this.lastName.setErrors({
+          required: r
+        })
+      } else {
+        this.lastName.setErrors({
+          mismatch: true
+        });
+      }
+    })
   }
 
   emailValidation(control: AbstractControl) {
