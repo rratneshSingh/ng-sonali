@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-add-user',
@@ -12,11 +12,13 @@ export class AddUserComponent implements OnInit {
 
   form: FormGroup = new FormGroup({
     firstName: new FormControl('', Validators.required),
+    email: new FormControl('', [Validators.required, this.emailValidation]),
     lastName: new FormControl('', Validators.required),
     address: new FormGroup({
       city: new FormControl('', Validators.required),
       state: new FormControl('', Validators.required)
-    })
+    }),
+    skills: new FormArray([])
   });
 
   constructor(private fb: FormBuilder) {}
@@ -24,8 +26,30 @@ export class AddUserComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  emailValidation(control: AbstractControl) {
+    const res = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(control.value)
+    return res ? null : {
+      customEmail: true
+    }
+  }
+
+  addSkill() {
+    (this.form.get('skills') as FormArray).push(new FormGroup({
+      title: new FormControl('', Validators.required),
+      experience: new FormControl('', Validators.required)
+    }))
+  }
+
+  removeSkill(i: number) {
+    (this.form.get('skills') as FormArray).removeAt(i);
+  }
+
   submit() {
     console.log(this.form.value);
+  }
+
+  get email() {
+    return this.form.get('email') as FormControl;
   }
 
   get firstName() {
@@ -46,5 +70,9 @@ export class AddUserComponent implements OnInit {
 
   get state() {
     return this.form.get('address')?.get('state') as FormControl;
+  }
+
+  get skills() {
+    return this.form.get('skills') as FormArray;
   }
 }

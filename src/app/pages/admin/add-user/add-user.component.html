@@ -3,6 +3,18 @@
         <div class="col-6">
             <form [formGroup]="form" (ngSubmit)="submit()">
                 <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label">Email</label>
+                    <input type="text" [formControl]="email" class="form-control" id="exampleInputEmail1">
+                    <ng-container *ngIf="email.invalid && email.dirty">
+                        <p style="color:red;" *ngIf="email?.errors?.['required']">
+                            <span>Email is required.</span>
+                        </p>
+                        <p style="color:red;" *ngIf="!email?.errors?.['required'] && email?.errors?.['customEmail']">
+                            <span>Email format is wrong.</span>
+                        </p>
+                    </ng-container>
+                </div>
+                <div class="mb-3">
                     <label for="exampleInputFirstName1" class="form-label">FirstName</label>
                     <input type="text" [formControl]="firstName" class="form-control" id="exampleInputFirstName1">
                     <p style="color:red;" *ngIf="firstName?.invalid && firstName?.dirty">
@@ -16,7 +28,7 @@
                         <span>LastName is required.</span>
                     </p>
                 </div>
-                <div [formGroup]="address">
+                <ng-container [formGroup]="address">
                     Address::
                     <div class="mb-3">
                         <label for="exampleInputCity1" class="form-label">City</label>
@@ -32,7 +44,28 @@
                             <span>state is required.</span>
                         </p>
                     </div>
-                </div>
+                </ng-container>
+                <ng-container formArrayName="skills">
+                    <button type="button" (click)="addSkill()">Add Skill</button><br>
+                    <ng-container *ngFor="let skill of skills?.controls; let i = index;" formGroupName="{{i}}">
+                        Skill: {{i+1}}
+                        <div class="mb-3">
+                            <label for="exampleInputTitle1" class="form-label">Title</label>
+                            <input type="text" formControlName="title" class="form-control" id="exampleInputTitle1">
+                            <p style="color:red;" *ngIf="skill.get('title')?.invalid && skill.get('title')?.dirty">
+                                <span>Title is required.</span>
+                            </p>
+                        </div>
+                        <div class="mb-3">
+                            <label for="exampleInputExperience1" class="form-label">Experience</label>
+                            <input type="text" formControlName="experience" class="form-control" id="exampleInputExperience1">
+                            <p style="color:red;" *ngIf="skill.get('experience')?.invalid && skill.get('experience')?.dirty">
+                                <span>Experience is required.</span>
+                            </p>
+                        </div>
+                        <button type="button" (click)="removeSkill(i)">Remove Skill</button>
+                    </ng-container> 
+                </ng-container>
                 <button type="submit" class="btn btn-primary" [disabled]="form.invalid">Submit</button>
             </form>
         </div>
