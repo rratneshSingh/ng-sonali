@@ -10,6 +10,7 @@ const routes: Routes = [
   { path: 'products', loadChildren: () => import('./pages/products/products.module').then(m => m.ProductsModule), canLoad: [AuthGuard] },
   { path: 'cart', loadChildren: () => import('./pages/cart-details/cart-details.module').then(m => m.CartDetailsModule),  canLoad: [AuthGuard] },
   { path: 'admin', loadChildren: () => import('./pages/admin/admin.module').then(m => m.AdminModule),  canLoad: [AuthGuard] },
+  { path: 'auth', loadChildren: () => import('./pages/auth/auth.module').then(m => m.AuthModule) },
   { path: '**', component: NotFoundComponent }
 ];
 

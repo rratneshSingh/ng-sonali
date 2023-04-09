@@ -1,4 +1,4 @@
-<div>
+<div *ngIf="router.url !== '/auth/login'; else auth">
     <div class="wrapper">
         <!-- Sidebar -->
         <app-sidebar></app-sidebar>
@@ -10,3 +10,7 @@
     </div>
     <app-footer></app-footer>
 </div>
+
+<ng-template #auth>
+    <router-outlet></router-outlet>
+</ng-template>
