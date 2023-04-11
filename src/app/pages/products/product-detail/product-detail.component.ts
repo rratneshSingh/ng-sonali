@@ -16,6 +16,8 @@ export class ProductDetailComponent implements OnInit {
 
   ngOnInit(): void {
     const productId = this.ar.snapshot.params['productId'];
-    this.product = this.ps.getProductById(productId) || null;
+    this.ps.getProductById(productId).subscribe( product => {
+      this.product = product;
+    })
   }
 }

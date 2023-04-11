@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Product } from 'src/app/models/product.model';
+import { CartItem, Product } from 'src/app/models/product.model';
 import { ProductService } from 'src/app/services/product.service';
 
 @Component({
@@ -11,30 +11,32 @@ export class ProductsComponent implements OnInit {
 
   products: Product[] = [];
   filteredProducts: Product[] = [];
-  cart: { [id: string]: number } = {};
+  cart: CartItem[] = []
   searchText = '';
 
   get cartCount() {
     let count = 0;
-    Object.keys(this.cart).forEach( id => {
-      count = count + this.cart[id];
+    this.cart.forEach( cartItem => {
+      count = count + cartItem.count;
     });
     return count;
   }
 
-  onAddToCart(id: string) {
-    this.ps.onAddToCart(id);
+  onAddToCart(id: number|null) {
+    this.ps.addToCart(id);
   }
 
-  onRemoveToCart(id: string) {
-    this.ps.onRemoveToCart(id);
+  onRemoveToCart(id: number|null) {
+    this.ps.removeFromCart(id);
   }
 
   constructor(public ps: ProductService) { }
 
   ngOnInit(): void {
-    this.products = [...this.ps.products];
-    this.filteredProducts = [...this.products];
+    this.ps.getAllProducts().subscribe( products => {
+      this.products = products;
+      this.filteredProducts = this.products;
+    });
     this.ps.cart$.subscribe((cart)=>{
       this.cart = cart;
     });
@@ -47,6 +49,15 @@ export class ProductsComponent implements OnInit {
       });
     } else {
       this.filteredProducts = [...this.products];
+    }
+  }
+
+  getCartCountById(id: number | null) {
+    const cartItem = this.cart.find( c => c.id === id );
+    if ( cartItem ) {
+      return cartItem.count;
+    } else {
+      return 0;
     }
   }
 }

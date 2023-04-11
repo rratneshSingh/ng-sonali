@@ -1,78 +1,77 @@
-import { BehaviorSubject } from "rxjs";
-import { Product } from "../models/product.model";
+import { BehaviorSubject, Observable } from "rxjs";
+import { CartItem, Product } from "../models/product.model";
+import { HttpClient } from "@angular/common/http";
+import { Injectable } from "@angular/core";
+import { environment } from "src/environments/environment";
 
+@Injectable()
 export class ProductService {
 
-    products: Product[] = [
-        {
-            id: '1',
-            title: 'Lenovo Laptop',
-            price: 45000,
-            description: '4GB Ram, 15 inch screen',
-            stockCount: 9
-        },
-        {
-            id: '2',
-            title: 'Samsung Laptop',
-            price: 90000,
-            description: '4GB Ram, 15 inch screen',
-            stockCount: 7
-        },
-        {
-            id: '3',
-            title: 'HP Laptop',
-            price: 30000,
-            description: '4GB Ram, 15 inch screen',
-            stockCount: 6
-        },
-        {
-            id: '4',
-            title: 'HP Mouse',
-            price: 300,
-            description: 'Wireless',
-            stockCount: 6
-        },
-        {
-            id: '5',
-            title: 'Lenevo Keyboard',
-            price: 2000,
-            description: 'Wireless',
-            stockCount: 6
-        },
-        {
-            id: '6',
-            title: 'BenQ Monitor',
-            price: 10000,
-            description: '15 inch screen',
-            stockCount: 0
-        }
-    ];
+    productUrl = `${environment.baseUrl}/product`;
+    cartUrl = `${environment.baseUrl}/cart`;
 
-    cart: { [id: string]: number } = {};
+    cart: CartItem[] = [];
 
     cart$ = new BehaviorSubject(this.cart);
 
-    onAddToCart(id: string) {
-        this.cart = {...this.cart};
-        this.cart[id] = (this.cart[id] || 0) + 1;
-        localStorage.setItem('cart', JSON.stringify(this.cart));
-        this.cart$.next(this.cart);
-    }
-    
-    onRemoveToCart(id: string) {
-        this.cart = {...this.cart};
-        if ( this.cart[id] === 0) return;
-        this.cart[id] -= 1;
-        localStorage.setItem('cart', JSON.stringify(this.cart));
-        this.cart$.next(this.cart);
+    addToCart(id: number | null) {
+        debugger;
+        if (!id) return;
+        const cartItem = this.cart.find(c => c.id === id);
+        if (cartItem) {
+            this.http.put(`${this.cartUrl}/${id}`, { count: cartItem.count + 1 }).subscribe(() => {
+                this.updateCart();
+            })
+        } else {
+            this.http.post(`${this.cartUrl}`, { count: 1 }).subscribe(() => {
+                this.updateCart();
+            });
+        }
+
     }
 
-    getProductById( productId: string ) {
-        return this.products.find( p => p.id === productId );
+    removeFromCart(id: number | null) {
+        if (!id) return;
+        const cartItem = this.cart.find(c => c.id === id);
+        if (cartItem) {
+            if (cartItem.count === 1) {
+                this.deleteCartItem(id).subscribe(() => {
+                    this.updateCart();
+                });
+            } else {
+                this.http.put(`${this.cartUrl}/${id}`, { count: cartItem.count - 1 }).subscribe(()=>{
+                    this.updateCart();
+                })
+            }
+        } else {
+        }
+
     }
 
-    constructor() {
-        this.cart = JSON.parse(localStorage.getItem('cart') || '{}');
-        this.cart$.next(this.cart);
+    updateCart() {
+        this.getAllCartItems().subscribe(cartItems => {
+            this.cart = cartItems;
+            this.cart$.next(this.cart)
+        })
+    }
+
+    deleteCartItem(id: number) {
+        return this.http.delete(`${this.cartUrl}/${id}`);
+    }
+    getAllCartItems(): Observable<CartItem[]> {
+        return this.http.get<CartItem[]>(`${this.cartUrl}`);
+    }
+    getCartItemById(id: number): Observable<CartItem> {
+        return this.http.get<CartItem>(`${this.cartUrl}/${id}`);
+    }
+    getProductById(productId: string): Observable<Product> {
+        return this.http.get<Product>(`${this.productUrl}/${productId}`);
+    }
+    getAllProducts(): Observable<Product[]> {
+        return this.http.get<Product[]>(this.productUrl);
+    }
+
+    constructor(private http: HttpClient) {
+        this.updateCart();
     }
 }

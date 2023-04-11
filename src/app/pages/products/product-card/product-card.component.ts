@@ -11,8 +11,8 @@ export class ProductCardComponent implements OnInit {
   @Input() product: Product | null = null;
   @Input() cartCount: number = 0;
 
-  @Output() onCartAdd = new EventEmitter<string>();
-  @Output() onCartRemove = new EventEmitter<string>();
+  @Output() onCartAdd = new EventEmitter<number|null>();
+  @Output() onCartRemove = new EventEmitter<number|null>();
 
   constructor() { }
 

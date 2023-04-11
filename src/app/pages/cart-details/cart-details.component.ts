@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Product } from 'src/app/models/product.model';
+import { CartItem, Product } from 'src/app/models/product.model';
 import { ProductService } from 'src/app/services/product.service';
 
 @Component({
@@ -10,31 +10,44 @@ import { ProductService } from 'src/app/services/product.service';
 export class CartDetailsComponent implements OnInit {
 
   products: Product[] = [];
-  cart: {[id: string]: number} = {};
+  cart: CartItem[] = [];
   cartItems: Array<{ product: Product, count: number, totalPrice: number }> = [];
+  cartItemsIds: { [key:string]: number } = { };
 
   constructor(public ps: ProductService) { }
 
   ngOnInit(): void {
-    this.products = this.ps.products;
+    this.ps.getAllProducts().subscribe( products => {
+      this.products = products;
+      this.cartItems = this.getCartItems();
+    })
     this.ps.cart$.subscribe((cart)=>{
       this.cart = cart;
-      this.cartItems = this.products.filter( ( p ) => this.cart[p.id || ''] ).map( p => {
-        return {
-          product: p,
-          count: this.cart[p.id || ''],
-          totalPrice: (p.price || 0)*this.cart[p.id||'']
-        }
-      })
+      this.cartItemsIds = this.cart.reduce( (acc: { [key: string]: number }, item) => {
+        acc[item.id as number] = item.count;
+        return acc;
+      }, {});
+      this.cartItems = this.getCartItems();
     });
+  }
+
+  getCartItems() {
+    return this.products.filter( p => this.cartItemsIds[p.id as number]).map( p => {
+      const count = this.cartItemsIds[p.id as number]
+      return {
+        count: count,
+        totalPrice: (p?.price||0)*count,
+        product: p
+      }
+    })
   }
 
 
 
   get cartCount() {
     let count = 0;
-    Object.keys(this.cart).forEach( id => {
-      count = count + this.cart[id];
+    this.cart.forEach( cartItem => {
+      count = count + cartItem.count;
     });
     return count;
   }
