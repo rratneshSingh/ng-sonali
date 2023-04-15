@@ -12,6 +12,8 @@ export class ProductDetailComponent implements OnInit {
 
   product: Product | null = null;
 
+  date = new Date();
+
   constructor(private ps: ProductService, private ar: ActivatedRoute) { }
 
   ngOnInit(): void {

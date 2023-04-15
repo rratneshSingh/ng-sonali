@@ -1,7 +1,8 @@
 <div>
-    <h1>{{ product?.title }}</h1>
+    <h1>{{ product?.title | uppercase }}</h1>
     <h3>{{ product?.description }}</h3>
-    <h5>Price: {{ product?.price }}</h5>
+    <h5>Price: {{ product?.price | currency:'CAD' }}</h5>
+    <p>{{date | date:'MMM d, y, h:mm a'}}</p>
     <p style="color: lightgreen" *ngIf="product?.stockCount; else outOfStock">{{ product?.stockCount }} item left</p>
     <ng-template #outOfStock>
         <p style="color: red">Out Of Stock</p>

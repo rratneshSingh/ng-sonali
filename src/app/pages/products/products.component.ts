@@ -11,7 +11,7 @@ export class ProductsComponent implements OnInit {
 
   products: Product[] = [];
   filteredProducts: Product[] = [];
-  cart: CartItem[] = []
+  cart: CartItem[] = [];
   searchText = '';
 
   get cartCount() {

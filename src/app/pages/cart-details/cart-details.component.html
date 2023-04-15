@@ -6,7 +6,7 @@
           <div class="ms-2 me-auto">
             <div class="fw-bold">{{item.product.title}}</div>
             Price: {{ item.product.price }}
-            Count: {{ item.count }}
+            <!-- Count: {{ item.count | cartCount:item.product:item.count }} -->
           </div>
           <span class="badge bg-primary rounded-pill">{{ item.totalPrice }}</span>
         </li>
