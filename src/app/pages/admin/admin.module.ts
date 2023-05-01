@@ -27,6 +27,5 @@ import { ProductGuard } from 'src/app/services/product.guard';
       { path: 'user/edit', component: AddUserComponent }
     ])
   ],
-  providers: [ProductGuard]
 })
 export class AdminModule { }

@@ -1,9 +1,12 @@
-<div class="card" style="height: 100%;" [routerLink]="['/products', product?.id]">
+<div class="card" style="height: 100%;" >
     <div class="card-body">
+      <ng-content select="button"></ng-content>
       <h5 class="card-title">{{product?.title | uppercase}}</h5>
       <p class="card-text">{{product?.description | more:5 }}</p>
       <p>Price: {{product?.price}}</p>
+      <ng-content select="p"></ng-content>
       <!-- <p>Count: {{ cartCount | cartCount:product:cartCount }}</p> -->
       <app-add-remove-product [count]="cartCount" (onAdd)="onCartAdd.emit(product?.id || null)" (onSubstract)="onCartRemove.emit(product?.id || null)"></app-add-remove-product>
+      <!-- <app-add-remove-product [count]="cartCount" (onAdd)="onCartAdd.emit(product?.id || null)" (onSubstract)="onCartRemove.emit(product?.id || null)"></app-add-remove-product> -->
     </div>
 </div>

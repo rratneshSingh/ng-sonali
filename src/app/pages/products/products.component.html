@@ -11,7 +11,12 @@
     <div class="row">
         <div class="col-4" *ngFor="let product of filteredProducts" style="margin-bottom: 20px;">
             <app-product-card [cartCount]="getCartCountById(product.id) || 0" [product]="product"
-                (onCartAdd)="onAddToCart($event)" (onCartRemove)="onRemoveToCart($event)"></app-product-card>
+                (onCartAdd)="onAddToCart($event)" (onCartRemove)="onRemoveToCart($event)">
+
+                <button #btn>Hello World!!</button>
+                <p>Welcome</p>
+
+            </app-product-card>
         </div>
     </div>
 </div>

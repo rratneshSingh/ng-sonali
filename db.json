@@ -6,46 +6,11 @@
       "price": 45000,
       "description": "4GB Ram, 15 inch screen",
       "stockCount": 9
-    },
-    {
-      "id": 2,
-      "title": "Samsung Laptop",
-      "price": 90000,
-      "description": "4GB Ram, 15 inch screen",
-      "stockCount": 7
-    },
-    {
-      "id": 3,
-      "title": "HP Laptop",
-      "price": 30000,
-      "description": "4GB Ram, 15 inch screen",
-      "stockCount": 6
-    },
-    {
-      "id": 4,
-      "title": "HP Mouse",
-      "price": 300,
-      "description": "Wireless",
-      "stockCount": 6
-    },
-    {
-      "id": 5,
-      "title": "Lenevo Keyboard",
-      "price": 2000,
-      "description": "Wireless",
-      "stockCount": 6
-    },
-    {
-      "id": 6,
-      "title": "BenQ Monitor",
-      "price": 10000,
-      "description": "15 inch screen",
-      "stockCount": 0
     }
   ],
   "cart": [
     {
-      "count": 8,
+      "count": 18,
       "id": 1
     },
     {
