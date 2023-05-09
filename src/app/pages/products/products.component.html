@@ -20,3 +20,17 @@
         </div>
     </div>
 </div>
+
+
+<ng-container>
+    <ng-container *ngIf="show" [ngTemplateOutlet]="temp1" [ngTemplateOutletContext]="{ data: data1, show: show }"></ng-container>
+    <ng-container *ngIf="!show" [ngTemplateOutlet]="temp2" [ngTemplateOutletContext]="{ data: data2 }"></ng-container>
+</ng-container>
+
+<ng-template #temp1 let-data="data" let-a="show">
+    <p>Hello {{ data.name }}</p> {{ show }}
+</ng-template>
+
+<ng-template #temp2 let-data="data" let-b="show">
+   <h2>Welcome {{ data.name}}</h2>{{ show }}
+</ng-template>

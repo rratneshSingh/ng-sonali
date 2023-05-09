@@ -9,6 +9,13 @@ import { ProductService } from 'src/app/services/product.service';
 })
 export class ProductsComponent implements OnInit {
 
+  show = false;
+  data1 = {
+    name: 'Ram'
+  }
+  data2 = {
+    name: 'Shyam'
+  }
   products: Product[] = [];
   filteredProducts: Product[] = [];
   cart: CartItem[] = [];

@@ -7,6 +7,7 @@ import { RouterModule } from '@angular/router';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { MorePipe } from './pipes/more.pipe';
 import { CartCountPipe } from './pipes/cart-count.pipe';
+import { HoverEffectDirective } from './directives/hover-effect.directive';
 
 @NgModule({
   declarations: [
@@ -15,12 +16,13 @@ import { CartCountPipe } from './pipes/cart-count.pipe';
     FooterComponent,
     NotFoundComponent,
     MorePipe,
-    CartCountPipe
+    CartCountPipe,
+    HoverEffectDirective
   ],
   imports: [
     CommonModule,
     RouterModule
   ],
-  exports: [SidebarComponent, HeaderComponent, FooterComponent, MorePipe, CartCountPipe]
+  exports: [SidebarComponent, HeaderComponent, FooterComponent, MorePipe,HoverEffectDirective, CartCountPipe]
 })
 export class SharedModule { }
